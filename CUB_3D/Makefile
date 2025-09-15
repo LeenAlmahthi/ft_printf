@@ -1,0 +1,32 @@
+CC = cc
+
+CFLAGS = -Wall -Wextra -Werror -I. -ILibft -Iget_next_line
+NAME = cub_3d
+OBJDIR = obj
+
+SRC = main.c ft_error_file.c
+
+LIBFT_SRC = $(shell cat src.txt)
+
+ALL_SRC = $(SRC) $(LIBFT_SRC)
+
+OBJ = $(ALL_SRC:%.c=$(OBJDIR)/%.o)
+
+all: $(NAME)
+
+$(NAME): $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+
+$(OBJDIR)/%.o: %.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	rm -rf $(OBJDIR)
+
+fclean: clean
+	rm -f $(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re
