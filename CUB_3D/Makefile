@@ -4,7 +4,7 @@ CFLAGS = -Wall -Wextra -Werror -I. -ILibft -Iget_next_line
 NAME = cub_3d
 OBJDIR = obj
 
-SRC = main.c ft_error_file.c
+SRC = main.c ft_error_file.c fill_dir.c free.c read_line.c read_file_utils.c
 
 LIBFT_SRC = $(shell cat src.txt)
 
