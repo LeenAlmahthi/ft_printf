@@ -3,12 +3,17 @@
 void print_map(t_map *map)
 {
     // printf("read_file: %s\n", map->read_file);
+    int     i;
 
-    // printf("map_2d:\n");
-    // for (int i = 0; i < map->map_height; i++)
-    // {
-    //     printf("  %s\n", map->map_2d[i]);
-    // }
+    i = 0;
+    printf("map_2d:\n");
+    while (map->map_2d[i] != NULL)
+    {
+        printf("  %s\n", map->map_2d[i]);
+        i++;
+    }
+    printf("readline %s\n", map->read_line);
+    printf("target %s\n", map->target);
 
     printf("texture_no: %s\n", map->texture_no);
     printf("texture_so: %s\n", map->texture_so);
@@ -22,7 +27,7 @@ void print_map(t_map *map)
     // printf("map_height: %d\n", map->map_height);
     printf("count_element: %d\n", map->count_element);
     printf("player_pos: x=%d, y=%d\n", map->player_pos[0], map->player_pos[1]);
-    printf("player_dir: x=%d, y=%d\n", map->player_dir[0], map->player_dir[1]);
+    printf("player_dir:%c\n", map->player_dir);
 }
 
 void    init_struct(t_map *map)
@@ -30,10 +35,12 @@ void    init_struct(t_map *map)
     map->read_line = NULL;
     map->all_map = NULL;
     map->map_2d = NULL;
+    map->num = NULL;
     map->texture_ea = NULL;
     map->texture_no = NULL;
     map->texture_so = NULL;
     map->texture_we = NULL;
+    map->target = NULL;
     map->ceiling_color[0] = -1;
     map->ceiling_color[1] = -1;
     map->ceiling_color[2] = -1;
@@ -43,8 +50,8 @@ void    init_struct(t_map *map)
     map->count_element = 0;
     map->map_height = -1;
     map->map_width = -1;
-    map->player_dir[0] = -1;
-    map->player_dir[1] = -1;
+    // map->player_dir[0] = -1;
+    // map->player_dir[1] = -1;
     map->player_pos[0] = -1;
     map->player_pos[1] = -1;
 }
@@ -63,7 +70,7 @@ int main (int arc, char **argv)
 {
     (void)argv;
     if (arc != 2 )
-       ft_error("Error in number of argement\n",1);
+       ft_error("Error in number of argement\n",1,NULL);
     if (check_and_fill_map(argv[1]))
             return (1);
 }

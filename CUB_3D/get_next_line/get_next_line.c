@@ -46,7 +46,11 @@ char	*get_next_line(int fd)
 	static char	*str;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
+	{
+		if (str)
+			free(str);
 		return (0);
+	}
 	str = read_line(fd, str);
 	if (!str || str[0] == '\0')
 	{

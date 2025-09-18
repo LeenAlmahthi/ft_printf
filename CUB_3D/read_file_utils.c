@@ -21,20 +21,29 @@ int valid_comma(char *s)
         return (first_num);
     return (-1);
 }
-int is_ones(char *s)
+int is_ones(char *s , int in_mpe)
 {
     int i = 0;
-    while (s[i] != '\n' && (s[i] == '\t' || s[i] == ' '))
+    (void)in_mpe;
+    while ((s[i] != '\n' || s[i] != '\0') && (s[i] == '\t' || s[i] == ' '))
         i++;
-    while (s[i] != '\n' && allow_char_in_map(s[i]))
+    while ((s[i] != '\n' || s[i] != '\0') && allow_char_in_map(s[i]))
         i++;
-    if (s[i] != '\n' && s[i] == '\n' && allow_char_in_map(s[i-1]))
-        return (0);
-    return (1);
+    if ((s[i] == '\n' || s[i] == '\0') &&  i > 0 && allow_char_in_map(s[i -1]))
+    {
+        if (in_mpe == 1)
+            return (1);
+        else 
+            return (0);
+    }
+    if (in_mpe == 1)
+        return (0);              
+    else 
+        return (1);
 }
 int allow_char_in_map(char c)
 {
-    if (c == '1' || c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W' || c == ' ' || c == '\t')
+    if (c == '1' || c == '0' || c == 'N' || c == 'S' || c == 'D' || c == 'E' || c == 'W' || c == ' ' || c == '\t')
         return (1);
     return (0);
 

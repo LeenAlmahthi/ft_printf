@@ -4,19 +4,25 @@ void	free_map(t_map *map)
 {
 	if (!map)
 		return;
-
-	free(map->texture_no);
-	free(map->texture_so);
-	free(map->texture_we);
-	free(map->texture_ea);
-	free(map->all_map);
-
-	// if (map->map_2d)
-	// {
-	// 	for (i = 0; map->map_2d[i]; i++)
-	// 		free(map->map_2d[i]);
-	// 	free(map->map_2d);
-	// }
+	if (map->texture_no != NULL)
+		free(map->texture_no);
+	if (map->texture_so != NULL)
+		free(map->texture_so);
+	if (map->texture_we != NULL)
+		free(map->texture_we);
+	if (map->texture_ea != NULL)
+		free(map->texture_ea);
+	if (map->all_map != NULL)
+	 	free(map->all_map);
+	if (map->read_line != NULL)
+		free(map->read_line);
+	if (map->map_2d != NULL)
+		free_2d_array(map->map_2d);
+	if (map->num != NULL)
+		free_2d_array(map->num);
+	if (map->target != NULL)
+		free(map->target);
+	get_next_line(-1);
 }
 void    ft_free(char *s , t_map *map)
 {

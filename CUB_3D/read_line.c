@@ -1,66 +1,111 @@
 #include "cub_3d.h"
-void read_map(t_map *map ,int fd)
+
+int    ft_read_line(t_map *map ,int fd)
 {
-    char *tmp;
-
-    tmp = NULL;
-    map->all_map = ft_strdup("");
-    if (!map->all_map)
-       return;
-    while (map->read_line != NULL && is_ones(map->read_line)) 
+    if(search_for_skip(map->read_line))
     {
-        if(search_for_skip(map->read_line))
-        {
-            free(map->read_line);
-            free(map->all_map);
-            ft_error("Error\nthe map contains a new line\n",1);
-            break;
-        }
-        tmp = ft_strjoin(map->all_map,map->read_line);
-        if (!tmp)
-            return;
-        free(map->all_map);
-        map->all_map = tmp;
         free(map->read_line);
-        map->read_line = get_next_line(fd);  
+        map->read_line = get_next_line(fd);
+        return (1);
     }
-    printf("%s",map->all_map);
+    if (!is_ones(map->read_line,0))
+        return (0);
+    map->target =  find_target(map->read_line);
+    if (!map->target)
+          ft_error("Error\n",1,map);
+    if (map->target)
+    {
+        fill_data_without_map(map->target,map->read_line,map);
+        free(map->target);
+        map->target = NULL;
+    }
+    free(map->read_line);
+    map->read_line = get_next_line(fd);
+    return (1);  
 }
+void check_wall_in_map(t_map *map)
+{
+    int i;
+    int j;
 
+    i = 0;
+    f = 0;
+    if (!top_wall(map))
+        ft_error("Error\nthe top of map was not surrounded with wall\n");
+    if (!do_wall(map))
+        ft_error("Error\nthe top of map was not surrounded with wall\n");
+    while (map->map_2d[i] != NULL)
+    {
+        j = 0;
+        while (map->map_2d[i][j] != '\0')
+        {
+            if (map->map_2d[i][j] != '1' &&  map->map_2d[i][j] != '0' && map->map_2d[i][j] != ' ' && map->map_2d[i][j] != '\t')
+            {
+                map->player_dir= map->map_2d[i][j];
+                map->player_pos[0] = i;
+                map->player_pos[1] = j; 
+                f++;
+            }
+            j++;
+        }
+        i++;
+    }
+    if (f > 1)
+        ft_error("Error\nThere are multiple players in map\n",1,map)
+}
+void check_num_of_map(t_map *map)
+{
+    int i;
+    int j;
+    int f;
+
+    i = 0;
+    f = 0;
+    while (map->map_2d[i] != NULL)
+    {
+        j = 0;
+        while (map->map_2d[i][j] != '\0')
+        {
+            if (map->map_2d[i][j] != '1' &&  map->map_2d[i][j] != '0' && map->map_2d[i][j] != ' ' && map->map_2d[i][j] != '\t')
+            {
+                map->player_dir= map->map_2d[i][j];
+                map->player_pos[0] = i;
+                map->player_pos[1] = j; 
+                f++;
+            }
+            j++;
+        }
+        i++;
+    }
+    if (f > 1)
+        ft_error("Error\nThere are multiple players in map\n",1,map)
+}
+void fill_2dmap(t_map *map)
+{
+    map->map_2d = ft_split(map->all_map,'\n');
+    if (!map->map_2d)
+        ft_error("Error\nmslloc failed\n",1,map);
+    check_num_of_map(map);
+    check_wall_in_map(map);
+        print_map(map);
+}
 int read_file(char *s ,t_map *map)
 {
     int     fd;
-    char    *target;
 
     fd = open(s ,O_RDONLY);
     if (fd < 0)
-        ft_error("Error\ncan't open file\n",1);
+        ft_error("Error\ncan't open file\n",1,NULL);
     map->read_line = get_next_line(fd);
-    while (map->read_line != NULL && is_ones(map->read_line)) 
+    while (map->read_line != NULL) 
     {
-        if(search_for_skip(map->read_line))
-        {
-            free(map->read_line);
-            map->read_line = get_next_line(fd);
-            continue;
-        }
-        if (map->count_element == 6)
+        if (!ft_read_line(map,fd))
             break;
-        target =  find_target(map->read_line);
-        if (target)
-        {
-            fill_data_without_map(target,map->read_line,map);
-            free(target);
-        }
-        free(map->read_line);
-        map->read_line = get_next_line(fd);  
     }
-    //// here is the start of map 
     if (!map->read_line || map->count_element != 6)
-          ft_error("Error\n",1);
-    read_map(map,fd);
-    print_map(map);
-    free(map->read_line);
+          ft_error("Error\nin textures\n",1,map);
+    read_all_map(map,fd);
+    fill_2dmap(map);
     free_map(map);
     return (0);
 }

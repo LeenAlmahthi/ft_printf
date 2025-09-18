@@ -13,34 +13,38 @@
 typedef	struct s_map
 {
 	char	*read_line;
+	char	*target;
 	char	**map_2d;
+	char	**num;
 	char	*texture_no;
 	char	*texture_so;
 	char	*texture_we;
 	char	*texture_ea;
 	char	*all_map;
+	char	player_dir;
 	int	floor_color[3];
 	int	ceiling_color[3];  // background color
 	int	map_width;
 	int	map_height; 
 	int	count_element;
 	int	player_pos[2];
-	int	player_dir[2];
 	
 } t_map;
 int		read_file(char *s ,t_map *map);
 int		check_file_name(char *s);
 int		valid_comma(char *s);
-int		is_ones(char *s);
+int		is_ones(char *s , int in_map);
 int		allow_char_in_map(char c);
 int		search_for_skip(char *s);
 int		fill_ceiling(char *read_line , t_map *map);
 int		fill_floor(char *read_line , t_map *map);
 int		check_and_fill_map(char *s);
-void	ft_error(char *s,int exit);
+int		have_cahr_after_map(t_map *map ,int fd);
+void	ft_error(char *s,int exit,t_map *map);
 void    fill_dir(char *target,char *read_line, t_map *map);
 void    fill_data_without_map(char *target,char *read_line, t_map *map);
 void	free_map(t_map *map);
+void	read_all_map(t_map *map ,int fd);
 void    ft_free(char *s , t_map *map);
 void	print_map(t_map *map);
 void    init_struct(t_map *map);
@@ -48,4 +52,5 @@ void	free_2d_array(char **num);
 char     *get_address(char *target, char *s,t_map *map);
 char    *find_target(char *s);
 #endif
+
 
