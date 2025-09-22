@@ -6,6 +6,7 @@
 #include "libft.h"
 #include "get_next_line.h"
 # include <fcntl.h>
+#include <mlx.h>
 # include <stdio.h>
 # include <string.h>
 # include <math.h>
@@ -18,10 +19,11 @@ typedef	struct s_map
 	char	**num;
 	char	*texture_no;
 	char	*texture_so;
-	char	*texture_we;
+	char	*texture_we;   //Path
 	char	*texture_ea;
 	char	*all_map;
 	char	player_dir;
+	int		flag;
 	int	floor_color[3];
 	int	ceiling_color[3];  // background color
 	int	map_width;
