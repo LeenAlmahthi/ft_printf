@@ -3,6 +3,10 @@
         "stdio.h": "c",
         "libft.h": "c",
         "stddef.h": "c",
-        "cub_3d.h": "c"
+        "cub_3d.h": "c",
+        "string.h": "c",
+        "stdlib.h": "c",
+        "get_next_line.h": "c",
+        "fcntl.h": "c"
     }
 }

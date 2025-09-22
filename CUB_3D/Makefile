@@ -5,7 +5,7 @@ MLX_FLAGS = -lmlx -lXext -lX11 -lm
 NAME = cub_3d
 OBJDIR = obj
 
-SRC = main.c ft_error_file.c fill_dir.c free.c read_line.c read_file_utils.c init_maps.c
+SRC = main.c fill_floor_and_c.c ft_error_file.c fill_dir.c  read_line.c read_file_utils.c init_maps.c
 
 LIBFT_SRC = $(shell cat src.txt)
 
@@ -16,7 +16,7 @@ OBJ = $(ALL_SRC:%.c=$(OBJDIR)/%.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(OBJ) $(MLX_FLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) $(MLX_FLAGS) -o $(NAME)
 
 $(OBJDIR)/%.o: %.c
 	@mkdir -p $(dir $@)

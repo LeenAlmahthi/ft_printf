@@ -1,8 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lalmahth <lalmahth@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/22 12:17:29 by lalmahth          #+#    #+#             */
+/*   Updated: 2025/09/22 12:17:55 by lalmahth         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-
-#include "libft.h"
+# include "libft.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
